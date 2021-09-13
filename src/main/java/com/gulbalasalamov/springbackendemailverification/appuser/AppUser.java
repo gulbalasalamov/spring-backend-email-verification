@@ -22,7 +22,7 @@ import java.util.Collections;
  * UserDetail implemented due to security
  */
 public class AppUser implements UserDetails {
-
+    @Id
     @SequenceGenerator(
             name="student_sequence",
             sequenceName = "student_sequence",
@@ -32,7 +32,7 @@ public class AppUser implements UserDetails {
             strategy = GenerationType.SEQUENCE,
             generator = "student_sequence"
     )
-    @Id
+
     private Long id;
     private String name;
     private String username;
