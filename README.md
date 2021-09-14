@@ -26,19 +26,11 @@ Most of the business logic for practice purpose and hence can be improved.
 
 ## UML Class Diagram
 
-The diagram below illustrates usa case of backend infastrcuture of app, excluding the frontend. 
+The diagram below illustrates usa case of backend infastrcuture of app. 
 
-All layers are communicating each other. 
+All layers are communicating each other and user goes through this flow. 
 
-- The API layer receives GET, POST, PUT and DELETE requests. 
-
-- The Service layer is essentially for business logic. 
-
-- The Data Access layer is responsible for connecting to database. 
-
-The API layer is talking to Service layer to get some data, and Service layer talks to Data Access layer to get data to return so that it does a round trip all the way back between layers.
-
-![Intro Page](https://github.com/gulbalasalamov/springboot-web-datajpa-postgresql/blob/master/docs/diagram.png)
+![Intro Page](https://github.com/gulbalasalamov/spring-backend-email-verification/blob/master/docs/diagram_login_registration_backend.png)
 
 ## Documentation
 End points:
