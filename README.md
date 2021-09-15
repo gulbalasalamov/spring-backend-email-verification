@@ -24,7 +24,7 @@ The project aims to:
 Most of the business logic for practice purpose and hence can be improved.  
 
 
-## UML Class Diagram
+## Diagram
 
 The diagram below illustrates usa case of backend infastrcuture of app. 
 
@@ -35,74 +35,61 @@ All layers are communicating each other and user goes through this flow.
 ## Documentation
 End points:
 
-GET http://localhost:8080/api/v1/student
+1. POST http://localhost:8080/api/v1/registration
 
-Following request will populate and list all records in database.
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Gulbala",
-    "email": "gulbala@gmail.com",
-    "dob": "1990-11-20",
-    "age": 30
-  },
-  {
-    "id": 2,
-    "name": "Alex",
-    "email": "alex@gmail.com",
-    "dob": "2004-11-05",
-    "age": 16
-  }
-]
-```
-POST http://localhost:8080/api/v1/student
-
-A new record in database with given name, email and dob is created. Specific id generated automatically and age calculated.
-
+Following request will create an app user record in the database. Provided email will receive a token link to enable the account.
 
 ```json
 {
-  "name": "Daria",
-  "email": "daria@gmail.com",
-  "dob": "1994-07-15"
+    "firstName": "Daria",
+    "lastName": "Mik",
+    "email": "daria@gmail.com",
+    "password": "password"
 }
 ```
+To confirm, a request received and added to database, connect to database and run query SELECT * FROM which will return us:
 
-PUT http://localhost:8080/api/v1/student/{{studentId}}
-> PUT ht<span>tp://localhost:8080/api/v1/student/3?name=Daria DA&email=daria_new'@'gmail.com
+ ![appuser in table](https://github.com/gulbalasalamov/spring-backend-email-verification/blob/master/docs/table_app_user_records.png)
+
+Now that post request successfully received and record created in the database, an tokenized email link that will expire after 15 minutes sent to the user.
+
+One of the simple way to test projects' emails with an easy to use web interface that runs on your machine is MailDev, which is a SMTP Server and Web Interface for viewing and testing email during development and used in this project as well. 
+
+MailDev wep app runs  at http://0.0.0.0:1080
+
+Clicking activate button will enable the account.
+
+![login_screen](https://github.com/gulbalasalamov/spring-backend-email-verification/blob/master/docs/login_screen1.png)
+
+To confirm the process , run query to populate list of app user with their all properties. SELECT * FROM app_user;
+
+Notice that initially given user's (Daria) "enabled" property was f (False). After confirmed and authorized, it changed to t (True)
+
+ ![login_screen](https://github.com/gulbalasalamov/spring-backend-email-verification/blob/master/docs/final_table_records.png)
  
- Selected record's name and email associated with provided id is updated.
+ Now login with user credentials provided during registration. If you try to login before authorized, you will get account locked error.
 
-```json
-[
-  ...
-  {
-    "id": 3,
-    "name": "Daria DA",
-    "email": "daria_new@gmail.com",
-    "dob": "1994-07-15",
-    "age": 27
-  }
- ...
-]
-```
+ ![login_screen](https://github.com/gulbalasalamov/spring-backend-email-verification/blob/master/docs/login_screen.png)
 
-DELETE http://localhost:8080/api/v1/student/{{studentId}}
- > DELETE ht<span>tp://localhost:8080/api/v1/student/2
- 
-Selected record and its information associated with provided id is removed.
+
+2. GET http://localhost:8080/api/v1/registration/confirm
+
+Request parameter -> token
+
+> http://localhost:8080/api/v1/registration/confirm?token=c7d2a42d-1504-4291-a1ff-079c4a6268eb  
+  
+Alternatively, you can activate your account by GET method. In order for this, include token as request parameter provided as response when you make a POST request 
  
 ## Running .jar and multiple instance of the app 
 
 
 Packaging application into .jar, multiple instance of the application can be run. To run another instance of the app, start it in another port. 
   
- > java -jar springdemo-0.0.1-SNAPSHOT.jar --server.port=8082 
+ > java -jar spring-backend-email-verification-0.0.1-SNAPSHOT --server.port=8082 
  
  ![Intro Page](https://github.com/gulbalasalamov/springboot-web-datajpa-postgresql/blob/master/docs/jar_instances.png)
 
-the .jar file can be accessed from releases: https://github.com/gulbalasalamov/springboot-web-datajpa-postgresql/releases/tag/v1.0
+the .jar file can be accessed from releases: 
+https://github.com/gulbalasalamov/spring-backend-email-verification/releases/tag/v1.0
 
 
